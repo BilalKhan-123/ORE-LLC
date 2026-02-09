@@ -1,0 +1,10 @@
+1: https://altumed.com/
+2: https://altumed.com/services/
+3: https://altumed.com/services/medical-billing-services/
+4: https://altumed.com/services/laboratory-billing-services/
+5: https://altumed.com/services/hospital-billing-services/
+6: https://altumed.com/services/hospitalist-billing-services/
+7: https://altumed.com/services/physician-billing-services/
+8: https://altumed.com/services/mips-registry-services/
+9: https://altumed.com/services/credentialing-services/
+10: https://altumed.com/specialties/

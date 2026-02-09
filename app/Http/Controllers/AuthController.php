@@ -221,7 +221,7 @@ class AuthController extends Controller
     {
         $this->authService->logout();
         
-        return redirect(route('login'))->with('success', __('message.logoutSuccess'));
+        return redirect(route('admin.login'))->with('success', __('message.logoutSuccess'));
     }
 
     /**

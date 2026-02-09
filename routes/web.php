@@ -16,7 +16,7 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('site.index');
 });
 
 // Stripe Webhook Route

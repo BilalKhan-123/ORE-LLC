@@ -14,7 +14,6 @@ class UserService
         private User $userObj,
         private UserOtp $userOtpObj,
         private UserOtpService $userOtpService,
-        private ParticipantService $participantService
     ) {
         //
     }
@@ -28,35 +27,6 @@ class UserService
 
     public function update(int $id, $inputs = [])
     {
-        $user = $this->resource($id);
-
-        DB::beginTransaction();
-        if (isset($user->role['name']) && $user->role['name'] == config('site.roles.user')) {
-            $this->participantService->update($id, $inputs);
-        } else {
-            $user->update($inputs);
-        }
-
-        if (! empty($inputs['birthdate'])) {
-            $userAge = Helper::getCurrentAge($inputs['birthdate']);
-            $ageGroup = AgeGroup::query()->where('min_age', '<=', $userAge)->where('max_age', '>=', $userAge)->firstOrFail();
-
-            if (! empty($user->answerLatest)) {
-                if (empty($user->answerLatest->age_group_id)) {
-                    $user->answerLatest()->take(1)->update([
-                        'age_group_id' => $ageGroup->id,
-                    ]);
-                }
-            }
-        }
-        DB::commit();
-
-        $data = [
-            'status' => true,
-            'message' => __('message.userProfileUpdate'),
-        ];
-
-        return $data;
     }
 
     public function changeStatus($inputs)

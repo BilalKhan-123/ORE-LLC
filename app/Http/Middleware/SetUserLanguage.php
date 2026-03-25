@@ -31,10 +31,18 @@ class SetUserLanguage
 
         // return $next($request);
 
-         $locale = $request->header('X-Locale') // from Vue headers
+        $locale = $request->header('X-Locale') // from Vue headers
             ?? $request->get('lang')           // from query string
+            ?? $request->session()->get('locale') // from session (guest selection)
+            ?? $request->cookie('locale')     // from cookie
             ?? (auth()->check() ? auth()->user()->language : null)
             ?? config('app.locale');           // fallback
+
+        // validate locale - keep allowed list small; extend if needed
+        $allowed = ['en', 'de'];
+        if (! in_array($locale, $allowed)) {
+            $locale = config('app.locale');
+        }
 
         App::setLocale($locale);
 

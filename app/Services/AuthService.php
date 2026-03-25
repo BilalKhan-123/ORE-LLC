@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\User\Resource as UserResource;
 
 class AuthService
 {
@@ -42,8 +41,6 @@ class AuthService
         $data = [
             'status' => true,
             'message' => __('message.userSignUpSuccess'),
-            'user' => new UserResource($user),
-            'token' => $user->createToken(config('app.name'))->plainTextToken,
         ];
 
         return $data;
@@ -59,13 +56,7 @@ class AuthService
             ]);
         }
 
-        if ($user->hasRole(config('site.roles.user')) && ! RouteRequest::is('*/participant/login')) {
-            $data['errors']['message'] = __('message.invalidCredentials');
-
-            return $data;
-        }
-
-        if (! $user->hasRole(config('site.roles.user')) && RouteRequest::is('*/participant/login')) {
+        if ($user->hasRole(config('site.roles.user')) && $user->status == config('site.user_status.inactive')) {
             $data['errors']['message'] = __('message.invalidCredentials');
 
             return $data;
@@ -80,14 +71,10 @@ class AuthService
         // Establish session-based login  
         Auth::login($user);
 
-        $userResource = new UserResource($user);
-        // $user['current#ole'] = [];
-
         $data = [
             'status' => true,
+            'user' => $user,
             'message' => __('message.loginSuccess'),
-            'user' => $userResource,
-            'token' => $user->createToken(config('app.name'))->plainTextToken,
         ];
 
         return $data;

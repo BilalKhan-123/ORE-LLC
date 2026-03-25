@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            CountrySeeder::class,
-            StateSeeder::class,
             UserSeeder::class,
-            FactorSeeder::class,
-            QuestionSeeder::class,
-            OptionSeeder::class,
-            DropdownOptionSeeder::class,
-            AgeGroupSeeder::class,
+            AboutSeeder::class,
+            BannerSeeder::class,
+            ServiceSeeder::class,
+            DepartmentSeeder::class,
+            GalarySeeder::class,
+            ContactSeeder::class,
+            TestimonialSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

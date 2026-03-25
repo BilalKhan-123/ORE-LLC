@@ -17,7 +17,6 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
-        "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
         "opcodesio/log-viewer": "^2.4",
         "spatie/laravel-littlegatekeeper": "^2.0",
@@ -36,7 +35,8 @@
     },
     "autoload": {
         "files": [
-            "app/Helpers/Helper.php"
+            "app/Helpers/Helper.php",
+            "app/Helpers/Site.php"
         ],
         "psr-4": {
             "App\\": "app/",

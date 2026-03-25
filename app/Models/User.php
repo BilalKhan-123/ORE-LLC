@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use BaseModel, HasApiTokens, HasFactory, HasRoles, Notifiable, SoftDeletes;
 
-    public static $guard_name = 'api';
+    public static $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -27,34 +28,26 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'company_name',
-        'status',
-        'client_id',
+        'username',
         'email',
+        'lang_country',
         'password',
+        'language',
         'mobile_no',
-        'address',
         'participants_limit',
         'email_verified_at',
-        'client_code',
-        'allow_multiple_attempts',
-        'birth_of_country_id',
-        'birth_of_city',
-        'birth_of_state_id',
         'zipcode',
+        'address',
         'birthdate',
-        'age_verified_by',
         'gender',
         'marital_status',
-        'describe_you_text',
-        'education',
         'living_status',
-        'feel_age',
-        'state_of_health',
-        'current_major_illness_text',
-        'language',
-        'chronological_age',
-        'chronological_age_range',
-        '_chronological_age_array',
+        'status',
+        'allow_multiple_attempts',
+        'stripe_customer_id',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
 
     /**
@@ -74,7 +67,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     protected $dates = ['created_at'];
@@ -163,7 +155,7 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        $this->attributes['password'] = Hash::make($password);
     }
 
     /**
